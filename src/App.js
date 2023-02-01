@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Loggin from "./components/Loggin";
+import Wellcome from "./components/Wellcome";
+import Home from "./components/Home";
+import { useState } from "react";
 function App() {
+  const [authentication, setAuthentication] = useState(false);
+
+  const func = (data) => {
+    setAuthentication(data);
+    console.log(authentication);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Routes>
+          {/* <Route path="/" navigate = element={<Home />} /> */}
+          <Route path="/" element={<Navigate to="/loggin" />}></Route>
+          <Route path="/loggin" element={<Loggin func={func} />} />
+
+          <Route
+            path="/loggin/wellcome/:id"
+            element={<Wellcome auth={authentication} />}
+          />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
